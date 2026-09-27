@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Service</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <span class="badge">Registration microservice</span>
+        <h2>Student Registration</h2>
+        <form action="/register" method="POST">
+            <label for="name">Student Name</label>
+            <input type="text" name="name" id="name" required placeholder="Enter student name">
+
+            <label for="usn">USN</label>
+            <input type="text" name="usn" id="usn" required placeholder="e.g. 1VU23CS001">
+
+            <label for="dept">Department</label>
+            <input type="text" name="dept" id="dept" required placeholder="e.g. CSE (DS)">
+
+            <input type="submit" value="Register Student">
+        </form>
+        <p class="crosslink">Already registered? <a id="records-link" href="#">View all records &rarr;</a></p>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>
