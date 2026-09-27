@@ -29,3 +29,23 @@ jobs:
       - name: Push Records Image
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/records-service:latest
+
+  deploy-to-aws:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy Records Service to EC2
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/records-service:latest
+            docker rm -f records-service || true
+            docker run -d \
+              --name records-service \
+              --network student-network \
+              -p 5002:5000 \
+              ${{ secrets.DOCKERHUB_USERNAME }}/records-service:latest
