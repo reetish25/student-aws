@@ -1,0 +1,35 @@
+name: Registration Service CI/CD
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "*.py"
+      - "*.txt"
+      - "Dockerfile"
+      - "templates/**"
+      - "static/**"
+      - ".github/workflows/registration.yml"
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Registration Image
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/registration-service:latest .
+
+      - name: Push Registration Image
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/registration-service:latest
