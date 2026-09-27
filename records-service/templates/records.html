@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Records Service</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <span class="badge">Records microservice</span>
+        <h2>Student Records</h2>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% else %}
+            <input type="text" id="search" placeholder="Filter by name, USN or department..." onkeyup="filterTable()">
+            <p class="count">Total students: <strong>{{ students|length }}</strong></p>
+            <table id="records-table">
+                <thead>
+                    <tr><th>ID</th><th>Name</th><th>USN</th><th>Department</th></tr>
+                </thead>
+                <tbody>
+                    {% for s in students %}
+                    <tr>
+                        <td>{{ s.id }}</td>
+                        <td>{{ s.name }}</td>
+                        <td>{{ s.usn }}</td>
+                        <td>{{ s.dept }}</td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="4">No students registered yet.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+        <p class="crosslink"><a id="registration-link" href="#">&larr; Back to Registration</a></p>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>
